@@ -1,0 +1,19 @@
+# Kaggle data — do not redistribute, download it from the competition page
+train.csv
+test.csv
+sample_submission.csv
+*.zip
+
+# generated output
+figures/
+eda_stats.json
+
+# python
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# os
+.DS_Store
