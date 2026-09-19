@@ -5,7 +5,7 @@ Exploratory Data Analysis and data visualization of the Kaggle
 (8,693 labelled passengers). One script reproduces every number and figure used in our
 presentation.
 
-**Team:** [Member 1] – [ID] · [Member 2] – [ID] · [Member 3] – [ID] · [Member 4] – [ID]
+**Team:** [67130500813] · [67130500837] · [67130500843] · [67130500857] · [67130500860]
 
 ## The question
 
