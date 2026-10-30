@@ -85,7 +85,27 @@ The dataset itself is **not** included in this repository (Kaggle competition ru
   bias the zero-spend group.
 * Colours were checked for protan / deutan / tritan separation.
 
-## Next: Phase 2 (modeling)
+## Phase 2 — Modeling (`spaceship_model.py`)
+
+```bash
+pip install -r requirements.txt
+python spaceship_model.py            # ~10 min on 2 CPU cores -> outputs/submission.csv
+python spaceship_model_figures.py    # figures/m1..m4 for the slides
+```
+
+| Step | What we do | Why |
+|---|---|---|
+| 1. Rule-based cleaning | ~1,600 gaps filled by logic from Phase 1 (CryoSleep/child → spend 0; spent → awake; HomePlanet/Side/Deck from travel group & surname; Earth → no VIP) | uses no target, so no leakage |
+| 2. Features | Deck, Side, CabinNum, GroupSize, FamilySize, log spend ×5, log Luxury / Basic / Total, NoSpend, Solo, IsChild | skewed spend → log1p |
+| 3. Remaining gaps | median / most-frequent **inside the sklearn Pipeline** | fitted on the training folds only |
+| 4. Validation | StratifiedGroupKFold, 5 folds × 3 repeats, grouped by travel group | train and test share **0** groups |
+| 5. Models | baseline, LogReg, RF, HistGB, LightGBM, XGBoost, CatBoost, 20-trial random search, soft-vote ensemble | |
+| 6. Final | top-3 soft-vote ensemble refit on all 8,693 rows → `outputs/submission.csv` | |
+
+Validation accuracy (mean of 15 grouped folds): baseline 49.8% · LogReg 79.5% · RF 80.3% ·
+CatBoost 81.2% · **ensemble 81.3%**. Kaggle metric = classification accuracy.
+
+## Phase 1 plan for Phase 2 (kept for reference)
 
 Rule-based imputation · features `Deck`, `Side`, `GroupSize`, luxury vs basic spend ·
 log-transformed spending · `CryoSleep × HomePlanet` interaction · logistic regression,
